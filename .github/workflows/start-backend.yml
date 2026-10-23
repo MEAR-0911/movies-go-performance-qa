@@ -31,7 +31,15 @@ jobs:
 
       - name: Start Spring Boot
         working-directory: movies-go/Back
+        env:
+          OMDB_KEY: ${{ secrets.OMDB_KEY }}
+        shell: bash
         run: |
+          if [ -z "$OMDB_KEY" ]; then
+            echo "Missing GitHub Actions secret: OMDB_KEY"
+            exit 1
+          fi
+
           mvn -B spring-boot:run > "$RUNNER_TEMP/moviesgo.log" 2>&1 &
           echo $! > "$RUNNER_TEMP/moviesgo.pid"
 
