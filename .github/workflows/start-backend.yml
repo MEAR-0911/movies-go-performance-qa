@@ -29,8 +29,10 @@ jobs:
           cache: maven
           cache-dependency-path: movies-go/Back/pom.xml
 
-      - name: Start Spring Boot
+       - name: Start Spring Boot
         working-directory: movies-go/Back
+        env:
+          OMDB_KEY: ${{ secrets.OMDB_KEY }}
         run: |
           mvn -B spring-boot:run > "$RUNNER_TEMP/moviesgo.log" 2>&1 &
           echo $! > "$RUNNER_TEMP/moviesgo.pid"
