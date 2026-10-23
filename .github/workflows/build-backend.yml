@@ -1,0 +1,33 @@
+
+name: Build Movies Go Backend
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Compile backend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout original Movies Go
+        uses: actions/checkout@v7
+        with:
+          repository: AsaelCRdev/Proyecto-equipo-64-1
+          ref: main
+          path: movies-go
+          persist-credentials: false
+
+      - name: Set up Java 21 and Maven cache
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+          cache-dependency-path: movies-go/Back/pom.xml
+
+      - name: Build backend
+        run: mvn -B -f movies-go/Back/pom.xml -DskipTests package
