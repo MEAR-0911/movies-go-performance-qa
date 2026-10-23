@@ -32,6 +32,7 @@ jobs:
         working-directory: movies-go/Front
         run: npm ci
 
-      - name: Build Angular frontend
+      - name: Build Angular frontend (diagnostic)
         working-directory: movies-go/Front
-        run: npm run build
+        run: npm run build -- --configuration development
+
